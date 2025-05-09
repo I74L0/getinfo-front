@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useClientes } from '../context/ClienteContext';
 import {
   CForm,
   CFormInput,
@@ -29,6 +30,8 @@ export default function CadastrarCliente() {
     cnpj: "",
   });
 
+  const { adicionarCliente } = useClientes();
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "anexo") {
@@ -40,6 +43,7 @@ export default function CadastrarCliente() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    adicionarCliente(formData);
     console.log("Dados do cliente:", formData);
     alert("Cliente cadastrado com sucesso!");
       // Reset opcional

@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { ClienteProvider } from './context/ClienteContext'
 
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
@@ -9,6 +10,8 @@ import './scss/style.scss'
 import './scss/examples.scss'
 import CadastroContrato from './views/pages/CadastroContrato'
 import CadastroCliente from './views/pages/CadastroCliente'
+import Clientes from './views/pages/Clientes'
+import DetalhesCliente from './views/pages/DetalhesCliente'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -38,6 +41,7 @@ const App = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
+    <ClienteProvider>
     <BrowserRouter>
       <Suspense
         fallback={
@@ -49,6 +53,9 @@ const App = () => {
         <Routes>
           <Route exact path="/cadastrar-contrato" name="Cadastro de Contrato" element={<CadastroContrato />} />
           <Route exact path="/cadastrar-cliente" name="Cadastro de Cliente" element={<CadastroCliente />} />
+          <Route path="/clientes" element={<Clientes />} />
+          <Route path="/clientes/:id" element={<DetalhesCliente />} />
+          <Route path="/clientes/cadastrar" element={<CadastroCliente />} />
           <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
@@ -57,6 +64,7 @@ const App = () => {
         </Routes>
       </Suspense>
     </BrowserRouter>
+    </ClienteProvider>
   )
 }
 
